@@ -1,4 +1,4 @@
-# Claude Code Instructions: match-insights
+# Claude Code Instructions: open-football-api
 
 ## Development method: TDCG
 

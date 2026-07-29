@@ -1,4 +1,4 @@
-# Contributing to match-insights
+# Contributing to open-football-api
 
 Thanks for your interest in contributing. A few rules keep this project consistent and reviewable.
 
