@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet title="XSL_formatting" type="text/xsl" href="/rss/rssRender.xsl"?>
+    <rss version='2.0'>
+    <channel>
+       <title>SkySports | News</title>
+       <link>http://www.skysports.com</link>
+       <description>Sports News</description>
+       <language>en-gb</language>
+       <lastBuildDate>Thu, 01 Jan 2026 16:50:46 GMT</lastBuildDate>
+       <copyright>Copyright 2026, BSKYB. All Rights Reserved.</copyright>
+       <category></category>
+       <image>
+            <title>Sky Sports</title>
+            <url>https://www.skysports.com/images/site/ss-logo-07.gif</url>
+            <link>https://www.skysports.com</link>
+       </image>
+       <ttl>120</ttl>
+       	<item>
+           <title><![CDATA[Both Palace and Fulham unchanged LIVE!]]></title>
+           <description><![CDATA[]]></description>
+           <link>https://www.skysports.com/football/crystal-palace-vs-fulham/live/531313</link>
+           <pubDate>Wed, 31 Dec 2025 17:05:00 GMT</pubDate>
+           <category>Liveblog</category>
+           <enclosure type="image/jpg" url="https://e2.365dm.com/25/12/1920x1080/skysports-premier-league-crystal-palace_7117355.jpg?20251222102706" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Anderson ends run of cult hero Hood to reach Worlds semi-finals]]></title>
+           <description><![CDATA[Gary Anderson charged into the World Darts Championship semi-finals for the eighth time in his career with victory over Ally Pally cult hero Justin Hood on New Year's Day.]]></description>
+           <link>https://www.skysports.com/darts/news/12040/13489228/gary-anderson-charges-into-world-darts-championship-semi-finals-for-eighth-time-with-victory-over-justin-hood</link>
+           <pubDate>Thu, 01 Jan 2026 15:48:00 GMT</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e2.365dm.com/26/01/1920x1080/skysports-gary-anderson-darts_7123732.jpg?20260101153847" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Kabral Du Mathan oozes class in Relkeel romp]]></title>
+           <description><![CDATA[Kabral Du Mathan sprinted clear of his rivals to run out a comfortable winner of the Dornan Engineering Relkeel Hurdle at Cheltenham.]]></description>
+           <link>https://www.skysports.com/racing/news/12040/13489326/cheltenham-dan-skeltons-kabral-du-mathan-oozes-class-in-relkeel-hurdle-romp</link>
+           <pubDate>Thu, 01 Jan 2026 15:28:00 GMT</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e1.365dm.com/26/01/1920x1080/skysports-kabral-du-mathan_7123742.jpg?20260101154410" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Man Utd have Mateta interest with club also monitoring Rennes defender Jacquet]]></title>
+           <description><![CDATA[Manchester United have a long-term interest in Crystal Palace striker Jean-Philippe Mateta.]]></description>
+           <link>https://www.skysports.com/football/news/12040/13489276/man-utd-interested-in-crystal-palace-striker-jean-philippe-mateta-stade-rennes-defender-jeremy-jacquet</link>
+           <pubDate>Thu, 01 Jan 2026 13:26:00 GMT</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e0.365dm.com/25/11/1920x1080/skysports-football-jean-philippe-mateta_7074268.jpg?20251106203111" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[World Darts Championship: Anderson and Searle into semis with Littler on from 7pm]]></title>
+           <description><![CDATA[]]></description>
+           <link>https://www.skysports.com/darts/live-blog/12040/13480473/world-darts-championship-2026-live-updates-video-analysis-results-schedule-with-luke-littler-luke-humphries-gary-anderson-in-action</link>
+           <pubDate>Thu, 01 Jan 2026 12:00:00 GMT</pubDate>
+           <category>Liveblog</category>
+           <enclosure type="image/jpg" url="https://e1.365dm.com/26/01/1920x1080/skysports-gary-anderson-darts_7123671.jpg?20260101142920" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Maresca leaves Chelsea after 18 months in charge]]></title>
+           <description><![CDATA[Enzo Maresca has left his role as Chelsea head coach after 18 months in charge at Stamford Bridge.]]></description>
+           <link>https://www.skysports.com/football/news/12040/13489078/enzo-maresca-chelsea-head-coach-leaves-stamford-bridge-with-replacement-set-to-be-announced-imminently</link>
+           <pubDate>Thu, 01 Jan 2026 12:00:00 GMT</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e2.365dm.com/26/01/1920x1080/skysports-enzo-maresca-chelsea_7123752.png?20260101155935" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Ipswich lead, Coventry pegged back & Boro trail | EFL on Sky LIVE!]]></title>
+           <description><![CDATA[]]></description>
+           <link>https://www.skysports.com/football/live-blog/12040/13487078/championship-live-scores-match-updates-and-free-highlights-plus-efl-latest-from-league-one-and-league-two</link>
+           <pubDate>Thu, 01 Jan 2026 11:45:00 GMT</pubDate>
+           <category>Liveblog</category>
+           <enclosure type="image/jpg" url="https://e2.365dm.com/26/01/1920x1080/skysports-ipswich-town-oxford_7123762.jpg?20260101162526" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Brighton latest: Gross coming home? Midfielder in talks over return]]></title>
+           <description><![CDATA[]]></description>
+           <link>https://www.skysports.com/football/live-blog/12040/13279295/brighton-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights</link>
+           <pubDate>Wed, 31 Dec 2025 12:50:00 GMT</pubDate>
+           <category>Liveblog</category>
+           <enclosure type="image/jpg" url="https://e2.365dm.com/25/10/1920x1080/skysports-brighton-news-club_7039246.jpg?20251002155936" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Hartington and Guard Duty clash at Windsor]]></title>
+           <description><![CDATA[We have a busy day&#8217;s racing on New Year&#8217;s Day with action from Newcastle, Southwell and Windsor, live on Sky Sports Racing...]]></description>
+           <link>https://www.skysports.com/racing/news/12040/13489034/today-on-sky-sports-racing-newcastle-southwell-and-windsor</link>
+           <pubDate>Thu, 01 Jan 2026 07:00:00 GMT</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e1.365dm.com/25/11/1920x1080/skysports-windsor-racing_7087540.jpg?20251121115850" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Joshua discharged from hospital after fatal car crash]]></title>
+           <description><![CDATA[Anthony Joshua has been discharged from hospital less than three days after a car crash in Nigeria that killed two of his close friends.]]></description>
+           <link>https://www.skysports.com/boxing/news/12040/13489154/anthony-joshua-british-boxer-and-former-world-champion-discharged-from-hospital-after-fatal-car-crash-in-nigeria</link>
+           <pubDate>Thu, 01 Jan 2026 00:09:00 GMT</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e1.365dm.com/26/01/1920x1080/skysports-boxing-anthony-joshua_7123270.jpg?20260101000358" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Ones to watch in 2026: Rogers, Greaves, Itauma, Woad and more]]></title>
+           <description><![CDATA[Which sports stars will shine in 2026?]]></description>
+           <link>https://www.skysports.com/football/news/12040/13488999/ones-to-watch-2026-morgan-rogers-beau-greaves-moses-itauma-luke-littler-keely-hodgkinson-lottie-woad-drake-maye-davina-perrin-and-more</link>
+           <pubDate>Thu, 01 Jan 2026 07:00:00 GMT</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e2.365dm.com/25/12/1920x1080/skysports-ones-to-watch-greaves_7123008.jpg?20251231131356" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Semenyo latest: £65m release clause now active]]></title>
+           <description><![CDATA[]]></description>
+           <link>https://www.skysports.com/football/live-blog/12040/13279286/bournemouth-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights</link>
+           <pubDate>Thu, 01 Jan 2026 09:00:00 GMT</pubDate>
+           <category>Liveblog</category>
+           <enclosure type="image/jpg" url="https://e1.365dm.com/25/10/1920x1080/skysports-bournemouth-news_7039242.jpg?20251002155747" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Maresca in danger of losing Chelsea job if results do not improve in January]]></title>
+           <description><![CDATA[Enzo Maresca will have to improve results at Chelsea quickly if he wants to keep his job after a run of one win in seven Premier League games. ]]></description>
+           <link>https://www.skysports.com/football/news/12040/13489075/enzo-maresca-in-danger-of-losing-chelsea-job-unless-results-improve-in-january-after-run-of-one-win-in-seven-league-games</link>
+           <pubDate>Wed, 31 Dec 2025 15:32:00 GMT</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e2.365dm.com/25/12/1920x1080/skysports-enzo-maresca-chelsea_7111252.jpg?20251215191855" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Scot Prem latest: Altena ‘couldn’t say no’ to Hearts move]]></title>
+           <description><![CDATA[]]></description>
+           <link>https://www.skysports.com/football/live-blog/12040/13176154/scottish-premiership-news-transfers-rumours-gossip-and-more</link>
+           <pubDate>Wed, 31 Dec 2025 14:49:00 GMT</pubDate>
+           <category>Liveblog</category>
+           <enclosure type="image/jpg" url="https://e2.365dm.com/25/08/1920x1080/skysports-scottish-premiership_6991555.jpg?20250815134026" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[West Ham latest: Hammers want Traore as Sporting begin Guilherme talks]]></title>
+           <description><![CDATA[]]></description>
+           <link>https://www.skysports.com/football/live-blog/12040/13210475/west-ham-latest-news</link>
+           <pubDate>Thu, 01 Jan 2026 15:00:00 GMT</pubDate>
+           <category>Liveblog</category>
+           <enclosure type="image/jpg" url="https://e0.365dm.com/25/10/1920x1080/skysports-west-ham-news-club_7039266.jpg?20251002160718" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Explained: Why Maresca left Chelsea - and the rookie in frame to replace him]]></title>
+           <description><![CDATA[Sky Sports' Kaveh Solhekol reports on the latest from Chelsea as Enzo Maresca departs from the club.]]></description>
+           <link>https://www.skysports.com/watch/video/13489192/enzo-maresca-leaves-chelsea-liam-rosenior-favourite-to-replace</link>
+           <pubDate>Thu, 01 Jan 2026 08:11:00 GMT</pubDate>
+           <category>Video</category>
+           <enclosure type="image/jpg" url="https://e2.365dm.com/26/01/1920x1080/skysports-chelsea-maresca_7123601.jpg?20260101124908" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA['I need revenge' - Sabalenka wants Battle of the Sexes rematch ]]></title>
+           <description><![CDATA[Aryna Sabalenka has welcomed the idea of a rematch of her 'Battle of the Sexes' match with Nick Kyrgios that she lost in straight sets in Dubai at the end of December.&#160;]]></description>
+           <link>https://www.skysports.com/tennis/news/12040/13489253/aryna-sabalenka-wants-battle-of-the-sexes-rematch-with-nick-kyrgios-as-she-seeks-revenge-for-defeat</link>
+           <pubDate>Thu, 01 Jan 2026 11:31:00 GMT</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e0.365dm.com/26/01/1920x1080/skysports-aryna-sabalenka-tennis_7123577.jpg?20260101120924" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Loughnane chalks up record-breaking 222nd win of the year]]></title>
+           <description><![CDATA[Billy Loughnane broke the 21st century record for winners in a calendar year after he registered his 222nd success on Invited at Lingfield Park on New Year&#8217;s Eve.]]></description>
+           <link>https://www.skysports.com/racing/news/12040/13489074/billy-loughnane-makes-history-as-he-breaks-kieren-fallons-record-for-most-wins-in-a-calendar-year-this-century</link>
+           <pubDate>Wed, 31 Dec 2025 15:30:00 GMT</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e2.365dm.com/25/12/1920x1080/skysports-loughnane-billy-racing_7123077.jpg?20251231153540" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Masters Snooker 2026: Draw and schedule as Murphy aims to defend title]]></title>
+           <description><![CDATA[The 2026 edition of snooker's Masters runs from January 11-18 at London's Alexandra Palace with Shaun Murphy the defending champion and Ronnie O'Sullivan a star attraction.]]></description>
+           <link>https://www.skysports.com/snooker/news/12040/13489039/masters-snooker-2026-draw-schedule-and-results-ronnie-osullivan-judd-trump-ding-junhui-mark-williams-mark-selby-and-more-at-alexandra-palace</link>
+           <pubDate>Wed, 31 Dec 2025 13:00:00 GMT</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e0.365dm.com/25/12/1920x1080/skysports-shaun-murphy-masters-snooker-2025_7122995.jpg?20251231125251" length="123456" />
+      </item>
+      	<item>
+           <title><![CDATA[Rees-Zammit commits to Bristol Bears in long-term deal]]></title>
+           <description><![CDATA[Wales back Louis Rees-Zammit has signed a long-term deal with Bristol, having joined&#160;the Bears for the 2025-26 season after ending his 18-month spell in the NFL.]]></description>
+           <link>https://www.skysports.com/rugby-union/news/12040/13489235/louis-rees-zammit-wales-international-commits-to-bristol-bears-by-signing-long-term-deal</link>
+           <pubDate>Thu, 01 Jan 2026 10:32:00 GMT</pubDate>
+           <category>News Story</category>
+           <enclosure type="image/jpg" url="https://e1.365dm.com/26/01/1920x1080/skysports-bristol-bears-louis-rees-zammit_7123526.jpg?20260101104952" length="123456" />
+      </item>
+            </channel>
+      </rss>
+ 

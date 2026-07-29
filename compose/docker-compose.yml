@@ -1,0 +1,26 @@
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: redis_local
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+#  insights-api:
+#    build: ../
+#    container_name: insights-api
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - redis
+#    environment:
+#      - SPRING_DATA_REDIS_HOST=redis
+#      - SPRING_DATA_REDIS_PORT=6379
+#      - SPRING_REDIS_TIMEOUT=60000
+#      - API_DATA_URL=
+#      - API_DATA_KEY=
+
+
+# commands
+# docker compose -f ... up
+# docker exec -it redis_local redis-cli

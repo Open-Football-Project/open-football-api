@@ -1,0 +1,178 @@
+spring:
+  application:
+    name: match-insights-api
+  mail:
+    host: smtp.example.com
+    port: 587
+    username: you@example.com
+    password: changeme
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+feedback:
+  from: you@example.com
+  recipients:
+    - you@example.com
+api-data:
+  url: https://dummy.football.api
+  key: changeme
+
+resilience4j:
+  ratelimiter:
+    instances:
+      apiSports:
+        limit-for-period: 6
+        limit-refresh-period: 1s
+        timeout-duration: 65s
+  retry:
+    instances:
+      apiSports:
+        max-attempts: 3
+        wait-duration: 1s
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2
+
+videocontent:
+  file: src/main/resources/videocontent.json
+  agedays: 30
+
+admin:
+  trigger-key: changeme
+
+availablepolls:
+  polls:
+    match-winner:
+      title: "Match Winner"
+      options:
+        home: "Home Win"
+        draw: "Draw"
+        away: "Away Win"
+    total-goals:
+      title: "Total Goals"
+      options:
+        low: "0-1 Goals"
+        medium: "2-3 Goals"
+        high: "4+ Goals"
+
+
+
+cache:
+  ttlSeconds:
+    fetchMatches: 900
+    fetchLeagueInfo: 900
+    fetchAllLeagues: 1800
+    fetchFixtureOdds: 300
+    fetchMatchDetails: 1800
+    fetchMatchEvents: 1800
+    fetchTeamDetails: 1800
+    fetchCoachDetails: 1800
+    fetchPlayers: 1800
+    fetchLiveFixtures: 45
+    fetchCurrentSquad: 1800
+    fetchLiveStatistics: 180
+    fetchLiveFixtureOdds: 180
+    fetchLiveLineups: 1800
+    fetchLeagueRanking: 900
+    fetchPlayerTrophies: 180
+    fetchTransfers: 180
+    fetchTeamStats: 900
+    fetchLeagueTeams: 900
+    fetchTeamLeagues: 900
+    fetchPlayerInfo: 900
+    getNews: 1800
+
+leagues-sorting:
+  countries:
+    - "world"
+    - "England"
+    - "Spain"
+  international:
+    - "fifa"
+    - "uefa"
+    - "world cup"
+  england:
+    - "premier league"
+    - "championship"
+  argentina:
+    - "liga profesional argentina"
+  spain:
+    - "la liga"
+  italy:
+    - "serie a"
+  usa:
+    - "major league soccer"
+  france:
+    - "ligue 1"
+  uruguay:
+    - "apertura"
+  germany:
+    - "bundesliga"
+  portugal:
+    - "primeira liga"
+  brazil:
+    - "serie a"
+
+
+sse:
+  initialDelayInMinutes: 0
+  refreshIntervalMinutes: 1
+  matchTimeOutMs: 7200000
+
+charts:
+  ttlSeconds: 86400
+  pollingMilli: 180000
+  schedulingEnabled: true
+  momentumWindowSize: 5
+  controlWindowSize: 5
+  goalThreatWindowSize: 5
+  idleBackoffMilli: 1800000
+  activeWindowMilli: 7800000
+  oddsPollingMilli: 300000
+  oddsTrackedMarketNames:
+    - fulltime_result
+    - double_chance
+    - both_teams_to_score
+  trackedLeagueIds:
+    - 1    # World Cup
+    - 39   # England - Premier League
+    - 140  # Spain - La Liga
+
+today-players:
+  ttlSeconds: 129600
+  trackedLeagueIds:
+    - 1    # World Cup
+    - 39   # England - Premier League
+    - 140  # Spain - La Liga
+  attackerMarkets:
+    - anytime_goal_scorer
+    - player_assists
+  midfieldMarkets:
+    - anytime_goal_scorer
+    - player_assists
+  goalkeeperMarkets:
+    - goalkeeper_saves
+  defenderMarkets:
+    - player_fouls_committed
+    - player_to_be_booked
+  nonPlayerOddsValues:
+    - Yes
+    - No
+    - No Goalscorer
+
+cors:
+  allowed:
+    - http://localhost:5173
+    - http://localhost:45678
+    - http://localhost:1111
+
+rss:
+  feeds:
+    - name: "BBC Football"
+      url: "https://feeds.bbci.co.uk/sport/football/rss.xml"
+      language: "en"
+      parserKey: "bBCNewsData"

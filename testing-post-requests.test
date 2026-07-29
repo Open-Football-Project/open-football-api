@@ -1,0 +1,14 @@
+ curl -X POST http://localhost:8080/api/feedback/new \                     ✔  3s 
+  -H "Content-Type: application/json" \
+  -d '{
+    "favoriteTeam": "Arsenal",
+    "league": "Premier League",
+    "liked": "Live stats and xG data",
+    "improvements": "Faster load times",
+    "wantsAndroidBeta": true,
+    "googleEmail": "fan@gmail.com"
+  }'
+
+curl -X POST http://localhost:8080/api/matches/1089175/tarot \
+  -H "Content-Type: application/json" \
+  -d '{"url": "https://www.youtube.com/watch?v=abc123"}'
