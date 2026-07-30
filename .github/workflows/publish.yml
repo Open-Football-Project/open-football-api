@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: leandrodalbo/match-insights
+  IMAGE_NAME: leandrodalbo/open-football-api
   VERSION: latest
 
 jobs:
