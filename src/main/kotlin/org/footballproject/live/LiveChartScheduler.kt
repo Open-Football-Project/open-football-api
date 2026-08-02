@@ -10,7 +10,10 @@ import org.slf4j.LoggerFactory
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import java.time.Clock
+import java.time.Duration
 import java.time.Instant
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 @Component
 class LiveChartScheduler(
@@ -43,7 +46,7 @@ class LiveChartScheduler(
         }
 
         oddsActiveUntil = now.plusMillis(chartsProps.activeWindowMilli)
-        processLiveOddsMatches(trackedMatches)
+        processLiveOddsMatches(trackedMatches, now)
     }
 
     @Scheduled(fixedRateString = "\${charts.pollingMilli}")
@@ -60,7 +63,7 @@ class LiveChartScheduler(
         }
 
         chartsActiveUntil = now.plusMillis(chartsProps.activeWindowMilli)
-        processLiveMatches(trackedMatches)
+        processLiveMatches(trackedMatches, now)
     }
 
     private fun shouldSuspend(now: Instant, activeUntil: Instant, nextIdleCheckAt: Instant): Boolean {
@@ -68,8 +71,8 @@ class LiveChartScheduler(
         return (now in activeUntil..<nextIdleCheckAt)
     }
 
-    private fun processLiveMatches(trackedMatches: List<LiveFixtureResponse>) {
-        trackedMatches.forEach { fixture ->
+    private fun processLiveMatches(trackedMatches: List<LiveFixtureResponse>, now: Instant) {
+        trackedMatches.map { withEstimatedElapsed(it, now) }.forEach { fixture ->
             try {
                 liveChartsService.captureLiveIndicators(fixture)
             } catch (e: Exception) {
@@ -79,8 +82,8 @@ class LiveChartScheduler(
     }
 
 
-    private fun processLiveOddsMatches(trackedMatches: List<LiveFixtureResponse>) {
-        trackedMatches.forEach { fixture ->
+    private fun processLiveOddsMatches(trackedMatches: List<LiveFixtureResponse>, now: Instant) {
+        trackedMatches.map { withEstimatedElapsed(it, now) }.forEach { fixture ->
             try {
                 liveChartsBetsService.captureLiveOdds(fixture)
             } catch (e: Exception) {
@@ -88,6 +91,20 @@ class LiveChartScheduler(
             }
         }
     }
+
+    fun withEstimatedElapsed(fixture: LiveFixtureResponse, now: Instant): LiveFixtureResponse {
+        val status = fixture.fixture.status
+        val fixtureInstant = fixtureDateToInstant(fixtureDate = fixture.fixture.date)
+
+        if (status == null || status.elapsed != null || fixtureInstant == null) return fixture
+
+        val estimatedElapsed = Duration.between(fixtureInstant, now).toMinutes().toInt().coerceAtLeast(0)
+        return fixture.copy(fixture = fixture.fixture.copy(status = status.copy(elapsed = estimatedElapsed)))
+    }
+
+    private fun fixtureDateToInstant(fixtureDate: String) = runCatching {
+        ZonedDateTime.parse(fixtureDate, DateTimeFormatter.ISO_DATE_TIME).toInstant()
+    }.getOrNull()
 
     private fun isInAValidLeague(leagueId: Int): Boolean = chartsProps.trackedLeagueIds.contains(leagueId)
 
