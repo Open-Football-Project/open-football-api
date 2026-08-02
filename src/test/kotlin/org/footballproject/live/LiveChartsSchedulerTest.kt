@@ -61,6 +61,21 @@ class LiveChartsSchedulerTest {
         events = emptyList()
     )
 
+    private fun fixtureWithElapsed(
+        fixtureId: Int,
+        elapsed: Int?,
+        date: String = "2026-06-25T10:00:00+00:00",
+        statusShort: String = org.footballproject.model.MatchStatus.FIRST_HALF.code,
+        leagueId: Int = trackedLeagueId
+    ) = LiveFixtureResponse(
+        fixture = Fixture(id = fixtureId, date = date, status = MatchStatus(short = statusShort, elapsed = elapsed)),
+        league = League(id = leagueId, season = 2026),
+        teams = Teams(),
+        goals = Goal(),
+        score = Score(),
+        events = emptyList()
+    )
+
     private class MutableClock(private var current: Instant) : Clock() {
         override fun getZone(): ZoneId = ZoneOffset.UTC
         override fun withZone(zone: ZoneId): Clock = this
@@ -342,5 +357,98 @@ class LiveChartsSchedulerTest {
         scheduler.captureLiveCharts()
 
         verify(exactly = 2) { liveData.allLiveMatches() }
+    }
+
+    @Test
+    fun shouldReturnFixtureUnchangedWhenElapsedIsAlreadyPresent() {
+        val fixture = fixtureWithElapsed(fixtureId = 233, elapsed = 23)
+
+        val result = underTest.withEstimatedElapsed(fixture, Instant.parse("2026-06-25T11:00:00Z"))
+
+        assert(result == fixture)
+    }
+
+    @Test
+    fun shouldEstimateElapsedFromKickoffTimeWhenElapsedIsNull() {
+        val fixture = fixtureWithElapsed(
+            fixtureId = 233,
+            elapsed = null,
+            date = "2026-06-25T10:00:00+00:00"
+        )
+
+        val result = underTest.withEstimatedElapsed(fixture, Instant.parse("2026-06-25T10:35:00Z"))
+
+        assert(result.fixture.status?.elapsed == 35)
+    }
+
+    @Test
+    fun shouldClampEstimatedElapsedToZeroWhenNowIsBeforeKickoff() {
+        val fixture = fixtureWithElapsed(
+            fixtureId = 233,
+            elapsed = null,
+            date = "2026-06-25T10:40:00+00:00"
+        )
+
+        val result = underTest.withEstimatedElapsed(fixture, Instant.parse("2026-06-25T10:35:00Z"))
+
+        assert(result.fixture.status?.elapsed == 0)
+    }
+
+    @Test
+    fun shouldLeaveFixtureUnchangedWhenElapsedIsNullAndDateCannotBeParsed() {
+        val fixture = fixtureWithElapsed(
+            fixtureId = 233,
+            elapsed = null,
+            date = "Unknown Date"
+        )
+
+        val result = underTest.withEstimatedElapsed(fixture, Instant.parse("2026-06-25T10:35:00Z"))
+
+        assert(result == fixture)
+        assert(result.fixture.status?.elapsed == null)
+    }
+
+    @Test
+    fun shouldLeaveFixtureUnchangedWhenStatusIsNull() {
+        val fixture = LiveFixtureResponse(
+            fixture = Fixture(id = 233, date = "2026-06-25T10:00:00+00:00", status = null),
+            league = League(id = trackedLeagueId, season = 2026),
+            teams = Teams(),
+            goals = Goal(),
+            score = Score(),
+            events = emptyList()
+        )
+
+        val result = underTest.withEstimatedElapsed(fixture, Instant.parse("2026-06-25T10:35:00Z"))
+
+        assert(result == fixture)
+    }
+
+    @Test
+    fun shouldForwardTheEstimatedElapsedFixtureToCaptureLiveIndicators() {
+        val clock = MutableClock(Instant.parse("2026-06-25T10:35:00Z"))
+        val scheduler = LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps, clock)
+        val fixture = fixtureWithElapsed(fixtureId = 233, elapsed = null, date = "2026-06-25T10:00:00+00:00")
+
+        every { liveData.allLiveMatches() } returns listOf(fixture)
+        every { liveChartsService.captureLiveIndicators(any()) } just Runs
+
+        scheduler.captureLiveCharts()
+
+        verify { liveChartsService.captureLiveIndicators(match { it.fixture.status?.elapsed == 35 }) }
+    }
+
+    @Test
+    fun shouldForwardTheEstimatedElapsedFixtureToCaptureLiveOdds() {
+        val clock = MutableClock(Instant.parse("2026-06-25T10:35:00Z"))
+        val scheduler = LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps, clock)
+        val fixture = fixtureWithElapsed(fixtureId = 233, elapsed = null, date = "2026-06-25T10:00:00+00:00")
+
+        every { liveData.allLiveMatches() } returns listOf(fixture)
+        every { liveChartsBetsService.captureLiveOdds(any()) } just Runs
+
+        scheduler.captureLiveOdds()
+
+        verify { liveChartsBetsService.captureLiveOdds(match { it.fixture.status?.elapsed == 35 }) }
     }
 }
