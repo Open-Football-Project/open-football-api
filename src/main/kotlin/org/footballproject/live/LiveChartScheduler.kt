@@ -1,5 +1,6 @@
 package org.footballproject.live
 
+import org.footballproject.clientData.MatchStatus as ClientStatus
 import org.footballproject.apidata.LiveData
 import org.footballproject.clientData.LiveFixtureResponse
 import org.footballproject.model.MatchStatus
@@ -96,10 +97,13 @@ class LiveChartScheduler(
         val status = fixture.fixture.status
         val fixtureInstant = fixtureDateToInstant(fixtureDate = fixture.fixture.date)
 
-        if (status == null || status.elapsed != null || fixtureInstant == null) return fixture
+        if (status?.elapsed != null || fixtureInstant == null) return fixture
 
         val estimatedElapsed = Duration.between(fixtureInstant, now).toMinutes().toInt().coerceAtLeast(0)
-        return fixture.copy(fixture = fixture.fixture.copy(status = status.copy(elapsed = estimatedElapsed)))
+        val estimatedStatus = status?.copy(elapsed = estimatedElapsed)
+            ?: ClientStatus(short = MatchStatus.LIVE.code, elapsed = estimatedElapsed)
+
+        return fixture.copy(fixture = fixture.fixture.copy(status = estimatedStatus))
     }
 
     private fun fixtureDateToInstant(fixtureDate: String) = runCatching {

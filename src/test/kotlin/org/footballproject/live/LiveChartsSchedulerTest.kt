@@ -409,9 +409,26 @@ class LiveChartsSchedulerTest {
     }
 
     @Test
-    fun shouldLeaveFixtureUnchangedWhenStatusIsNull() {
+    fun shouldFallBackToLiveStatusWithEstimatedElapsedWhenStatusIsNull() {
         val fixture = LiveFixtureResponse(
             fixture = Fixture(id = 233, date = "2026-06-25T10:00:00+00:00", status = null),
+            league = League(id = trackedLeagueId, season = 2026),
+            teams = Teams(),
+            goals = Goal(),
+            score = Score(),
+            events = emptyList()
+        )
+
+        val result = underTest.withEstimatedElapsed(fixture, Instant.parse("2026-06-25T10:35:00Z"))
+
+        assert(result.fixture.status?.short == org.footballproject.model.MatchStatus.LIVE.code)
+        assert(result.fixture.status?.elapsed == 35)
+    }
+
+    @Test
+    fun shouldLeaveFixtureUnchangedWhenStatusIsNullAndDateCannotBeParsed() {
+        val fixture = LiveFixtureResponse(
+            fixture = Fixture(id = 233, date = "Unknown Date", status = null),
             league = League(id = trackedLeagueId, season = 2026),
             teams = Teams(),
             goals = Goal(),
