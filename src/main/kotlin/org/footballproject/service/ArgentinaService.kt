@@ -18,7 +18,7 @@ class ArgentinaService(
 ) {
     fun argSpecialTables(): ArgSpecial = ArgSpecial(
         buildAnnualTable(LEAGUE_ID, CURRENT_YEAR),
-        computePromedios(listOf(LEAGUE_ID, CUP_LEAGUE_ID), CURRENT_YEAR, promedioTotalSeasons)
+        computePromedios(listOf(LEAGUE_ID, CUP_LEAGUE_ID), CURRENT_YEAR, PROMEDIOS_TOTAL_SEASONS)
     )
 
     fun buildAnnualTable(leagueId: Int, season: Int? = null): List<ArgLeagueEntry> {
@@ -82,7 +82,7 @@ class ArgentinaService(
     }
 
     fun computePromedios(
-        leagueIds: List<Int>, currentYear: Int, seasonsToInclude: Int = promedioTotalSeasons
+        leagueIds: List<Int>, currentYear: Int, seasonsToInclude: Int = PROMEDIOS_TOTAL_SEASONS
     ): List<ArgLeagueEntry> {
 
         val currentSeasonTeams = buildAnnualTable(leagueIds.first(), currentYear).map { it.teamId }.toSet()
@@ -163,33 +163,6 @@ class ArgentinaService(
         leagueEntry.promedio
     )
 
-    private fun variableLeagueEntry(immutable: ArgLeagueEntry): VariableLeagueEntry = VariableLeagueEntry(
-        immutable.teamId,
-        immutable.teamName,
-        immutable.teamLogo,
-        immutable.points,
-        immutable.played,
-        immutable.wins,
-        immutable.draws,
-        immutable.losses,
-        immutable.goalsFor,
-        immutable.goalsAgainst,
-        immutable.goalDifference,
-        immutable.promedio
-    )
-
-
-    companion object {
-        val LEAGUE_ID = 128
-        val CUP_LEAGUE_ID = 1032
-        val CURRENT_YEAR: Int = LocalDate.now().year
-        val knockoutMatchesKeywords = listOf(
-            "final", "quarter", "semi", "8th", "round"
-        )
-
-        val promedioTotalSeasons: Int = 3
-    }
-
     private data class VariableLeagueEntry(
         var teamId: Int = -1,
         var teamName: String = "",
@@ -204,5 +177,16 @@ class ArgentinaService(
         var goalDifference: Int = 0,
         var promedio: Double = 0.0
     )
+
+    companion object {
+        const val LEAGUE_ID = 128
+        const val CUP_LEAGUE_ID = 1032
+        val CURRENT_YEAR: Int = LocalDate.now().year
+        val knockoutMatchesKeywords = listOf(
+            "final", "quarter", "semi", "8th", "round"
+        )
+
+        const val PROMEDIOS_TOTAL_SEASONS: Int = 3
+    }
 
 }

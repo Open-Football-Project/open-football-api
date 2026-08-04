@@ -23,7 +23,7 @@ class TodayPlayersRepository(
     fun exists(fixtureId: Int): Boolean = redisTemplate.hasKey(buildKey(fixtureId)) == true
 
     fun getAllFixtures(): List<TodayPlayersWatchlist> =
-        (redisTemplate.keys(ALL_FIXTURES_PATTERN) ?: emptySet())
+        (redisTemplate.keys(ALL_FIXTURES_PATTERN))
             .mapNotNull { redisTemplate.opsForValue().get(it) as? TodayPlayersWatchlist }
 
     private fun buildKey(fixtureId: Int) = "today-players:$fixtureId"
