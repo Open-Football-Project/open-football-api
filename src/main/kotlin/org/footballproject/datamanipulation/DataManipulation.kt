@@ -148,13 +148,21 @@ class DataManipulation {
             buildMarketWrapper(allBookmakers, FIRST_HALF_WINNER),
             buildMarketWrapper(allBookmakers, BTTS_FIRST_HALF),
             buildMarketWrapper(allBookmakers, BTTS_SECOND_HALF),
-            buildMarketWrapper(allBookmakers, GOALS_OVER_UNDER_FIRST_HALF, outcomeFilter = listOf(OVER_ZERO_POINT_FIVE, UNDER_ZERO_POINT_FIVE)),
-            buildMarketWrapper(allBookmakers, CORNERS_OVER_UNDER, outcomeFilter = listOf(OVER_NINE_POINT_FIVE, UNDER_NINE_POINT_FIVE))
+            buildMarketWrapper(
+                allBookmakers,
+                GOALS_OVER_UNDER_FIRST_HALF,
+                outcomeFilter = listOf(OVER_ZERO_POINT_FIVE, UNDER_ZERO_POINT_FIVE)
+            ),
+            buildMarketWrapper(
+                allBookmakers,
+                CORNERS_OVER_UNDER,
+                outcomeFilter = listOf(OVER_NINE_POINT_FIVE, UNDER_NINE_POINT_FIVE)
+            )
         ).filterNotNull()
         return ValueBetsResponse(markets)
     }
 
-    fun buildMarketWrapper(
+    private fun buildMarketWrapper(
         allBookmakers: List<Bookmaker>,
         betName: String,
         outcomeFilter: List<String>? = emptyList()
@@ -230,7 +238,7 @@ class DataManipulation {
         return BookmakerLine(name = name, outcomes = outcomes)
     }
 
-    fun calculateOddsProbabilities(
+    private fun calculateOddsProbabilities(
         homeOdds: Double,
         drawOdds: Double,
         awayOdds: Double
