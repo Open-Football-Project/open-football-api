@@ -24,7 +24,7 @@ class LiveChartsRepositoryTest {
 
     private val underTest = LiveChartsRepository(
         redisTemplate,
-        ChartsProps(ttlSeconds = 14400, pollingMilli = 180000, trackedLeagueIds = emptyList(), schedulingEnabled = true)
+        ChartsProps(ttlSeconds = 14400, pollingMilli = 180000, schedulingEnabled = true)
     )
 
     @Test

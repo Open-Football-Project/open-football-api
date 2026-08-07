@@ -30,6 +30,7 @@ import org.footballproject.repository.LiveChartsRepository
 import org.footballproject.response.LiveChartableMatch
 import org.footballproject.response.FixtureChartsResponse
 import org.assertj.core.api.Assertions.assertThat
+import org.footballproject.props.Tracking
 import org.junit.jupiter.api.Test
 import java.time.Instant
 
@@ -45,19 +46,25 @@ class LiveChartsServiceTest {
     private val chartsProps = ChartsProps(
         ttlSeconds = 14400,
         pollingMilli = 180000,
-        trackedLeagueIds = listOf(trackedLeagueId),
         schedulingEnabled = true,
         momentumWindowSize = 5,
         controlWindowSize = 5,
         goalThreatWindowSize = 5
     )
 
+    private val tracking = Tracking(listOf(trackedLeagueId))
+
     private val underTest = LiveChartsService(
         matchesData, liveData, liveChartsRepository, liveMomentumManipulation, liveControlManipulation,
-        liveGoalThreatManipulation, chartsProps
+        liveGoalThreatManipulation, chartsProps, tracking = tracking
     )
 
-    private fun liveFixture(fixtureId: Int, minute: Int?, leagueId: Int = trackedLeagueId, statusShort: String = MatchStatus.FIRST_HALF.code) =
+    private fun liveFixture(
+        fixtureId: Int,
+        minute: Int?,
+        leagueId: Int = trackedLeagueId,
+        statusShort: String = MatchStatus.FIRST_HALF.code
+    ) =
         LiveFixtureResponse(
             fixture = Fixture(
                 id = fixtureId,

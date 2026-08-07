@@ -13,6 +13,7 @@ import org.footballproject.model.PlayerPosition
 import org.footballproject.model.PlayerScore
 import org.footballproject.model.TodayPlayersWatchlist
 import org.footballproject.props.TodayPlayersProps
+import org.footballproject.props.Tracking
 import org.footballproject.repository.TodayPlayersRepository
 import org.footballproject.response.FixtureTodayPlayers
 import org.slf4j.LoggerFactory
@@ -29,6 +30,7 @@ class TodayPlayersService(
     private val manipulation: TodayPlayersManipulation,
     private val todayPlayersRepository: TodayPlayersRepository,
     private val props: TodayPlayersProps,
+    private val tracking: Tracking,
     private val clock: Clock = Clock.systemUTC()
 ) {
 
@@ -37,7 +39,7 @@ class TodayPlayersService(
     fun captureTodayPlayers() {
         val tomorrow = LocalDate.now(clock).plusDays(1).toString()
         matchesData.matchesOfTheDay(tomorrow)
-            .filter { it.league.id in props.trackedLeagueIds && isCapturable(it) }
+            .filter { it.league.id in tracking.trackedLeagueIds && isCapturable(it) }
             .forEach { fixture ->
                 saveNewFixture(fixture)
             }
@@ -65,7 +67,7 @@ class TodayPlayersService(
         )
     }
 
-    fun trackedLeagueIds(): List<Int> = props.trackedLeagueIds
+    fun trackedLeagueIds(): List<Int> = tracking.trackedLeagueIds
 
     fun availableFixtureIds(): List<Int> = todayPlayersRepository.getAllFixtures().map { it.fixtureId }
 

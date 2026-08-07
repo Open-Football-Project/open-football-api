@@ -14,6 +14,7 @@ import org.footballproject.props.ChartsProps
 import org.footballproject.repository.LiveChartsRepository
 import org.footballproject.response.LiveChartableMatch
 import org.footballproject.model.MatchStatus
+import org.footballproject.props.Tracking
 import org.footballproject.response.FixtureChartsResponse
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -26,7 +27,8 @@ class LiveChartsService(
     private val liveMomentumManipulation: MomentumChartManipulation,
     private val liveControlManipulation: ControlChartManipulation,
     private val liveGoalThreatManipulation: GoalThreatChartManipulation,
-    private val chartsProps: ChartsProps
+    private val chartsProps: ChartsProps,
+    private val tracking: Tracking
 ) {
 
     private val log = LoggerFactory.getLogger(LiveChartsService::class.java)
@@ -55,11 +57,11 @@ class LiveChartsService(
         }
     }
 
-    fun activeLeagueIds(): List<Int> = chartsProps.trackedLeagueIds
+    fun activeLeagueIds(): List<Int> = tracking.trackedLeagueIds
 
     fun trackableLiveMatches(): List<LiveChartableMatch> =
         liveData.allLiveMatches()
-            .filter { it.league.id in chartsProps.trackedLeagueIds }
+            .filter { it.league.id in tracking.trackedLeagueIds }
             .map {
                 LiveChartableMatch(
                     fixtureId = it.fixture.id,

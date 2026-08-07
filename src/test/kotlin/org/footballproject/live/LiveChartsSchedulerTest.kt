@@ -14,6 +14,7 @@ import org.footballproject.clientData.MatchStatus
 import org.footballproject.clientData.Score
 import org.footballproject.clientData.Teams
 import org.footballproject.props.ChartsProps
+import org.footballproject.props.Tracking
 import org.footballproject.service.LiveChartsBetsService
 import org.footballproject.service.LiveChartsService
 import org.junit.jupiter.api.Test
@@ -31,12 +32,13 @@ class LiveChartsSchedulerTest {
     private val chartsProps = ChartsProps(
         ttlSeconds = 14400,
         pollingMilli = 180000,
-        trackedLeagueIds = listOf(trackedLeagueId),
         schedulingEnabled = true,
         oddsPollingMilli = 300000
     )
 
-    private val underTest = LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps)
+    private val tracking = Tracking(listOf(trackedLeagueId))
+    private val underTest =
+        LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps, tracking)
 
     private fun liveFixture(fixtureId: Int, minute: Int, leagueId: Int = trackedLeagueId) = LiveFixtureResponse(
         fixture = Fixture(id = fixtureId, status = MatchStatus(elapsed = minute)),
@@ -134,7 +136,8 @@ class LiveChartsSchedulerTest {
     @Test
     fun shouldDoNothingWhenSchedulingIsDisabled() {
         val disabledProps = chartsProps.copy(schedulingEnabled = false)
-        val underTestDisabled = LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, disabledProps)
+        val underTestDisabled =
+            LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, disabledProps, tracking)
         val fixture = liveFixture(fixtureId = 233, minute = 23)
 
         every { liveData.allLiveMatches() } returns listOf(fixture)
@@ -147,7 +150,8 @@ class LiveChartsSchedulerTest {
     @Test
     fun shouldSkipTheTickWhenIdleAndTheBackoffWindowHasNotElapsedYet() {
         val clock = MutableClock(Instant.parse("2026-06-25T10:00:00Z"))
-        val scheduler = LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps, clock)
+        val scheduler =
+            LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps, tracking, clock)
 
         every { liveData.allLiveMatches() } returns emptyList()
 
@@ -161,7 +165,8 @@ class LiveChartsSchedulerTest {
     @Test
     fun shouldCheckAgainOnceTheIdleBackoffWindowHasElapsed() {
         val clock = MutableClock(Instant.parse("2026-06-25T10:00:00Z"))
-        val scheduler = LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps, clock)
+        val scheduler =
+            LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps, tracking, clock)
 
         every { liveData.allLiveMatches() } returns emptyList()
 
@@ -175,7 +180,8 @@ class LiveChartsSchedulerTest {
     @Test
     fun shouldKeepCallingLiveDataThroughoutTheActiveWindowEvenWhenATickFindsNoMatches() {
         val clock = MutableClock(Instant.parse("2026-06-25T10:00:00Z"))
-        val scheduler = LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps, clock)
+        val scheduler =
+            LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps, tracking, clock)
         val trackedFixture = liveFixture(fixtureId = 233, minute = 23)
 
         every { liveData.allLiveMatches() } returns listOf(trackedFixture)
@@ -250,7 +256,8 @@ class LiveChartsSchedulerTest {
     @Test
     fun shouldNotShrinkTheActiveWindowWhenATickInsideItFindsNoMatches() {
         val clock = MutableClock(Instant.parse("2026-06-25T10:00:00Z"))
-        val scheduler = LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps, clock)
+        val scheduler =
+            LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps, tracking, clock)
         val trackedFixture = liveFixture(fixtureId = 233, minute = 23)
 
         every { liveData.allLiveMatches() } returns listOf(trackedFixture)
@@ -270,7 +277,8 @@ class LiveChartsSchedulerTest {
     @Test
     fun shouldSkipCaptureLiveOddsTickWhenItsOwnIdleBackoffHasNotElapsed() {
         val clock = MutableClock(Instant.parse("2026-06-25T10:00:00Z"))
-        val scheduler = LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps, clock)
+        val scheduler =
+            LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps, tracking, clock)
 
         every { liveData.allLiveMatches() } returns emptyList()
 
@@ -284,7 +292,8 @@ class LiveChartsSchedulerTest {
     @Test
     fun shouldCheckCaptureLiveOddsAgainOnceItsOwnIdleBackoffHasElapsed() {
         val clock = MutableClock(Instant.parse("2026-06-25T10:00:00Z"))
-        val scheduler = LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps, clock)
+        val scheduler =
+            LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps, tracking, clock)
 
         every { liveData.allLiveMatches() } returns emptyList()
 
@@ -298,7 +307,8 @@ class LiveChartsSchedulerTest {
     @Test
     fun shouldKeepCallingCaptureLiveOddsThroughoutItsActiveWindowEvenWhenSomeTicksHaveNoMatches() {
         val clock = MutableClock(Instant.parse("2026-06-25T10:00:00Z"))
-        val scheduler = LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps, clock)
+        val scheduler =
+            LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps, tracking, clock)
         val trackedFixture = oddsEligibleFixture(fixtureId = 233, minute = 23)
 
         every { liveData.allLiveMatches() } returns listOf(trackedFixture)
@@ -316,7 +326,8 @@ class LiveChartsSchedulerTest {
     @Test
     fun shouldNotShrinkOddsActiveWindowWhenATickInsideItFindsNoMatches() {
         val clock = MutableClock(Instant.parse("2026-06-25T10:00:00Z"))
-        val scheduler = LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps, clock)
+        val scheduler =
+            LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps, tracking, clock)
         val trackedFixture = oddsEligibleFixture(fixtureId = 233, minute = 23)
 
         every { liveData.allLiveMatches() } returns listOf(trackedFixture)
@@ -334,7 +345,8 @@ class LiveChartsSchedulerTest {
     @Test
     fun shouldNotSuspendCaptureLiveOddsWhenChartsIdleBackoffIsActive() {
         val clock = MutableClock(Instant.parse("2026-06-25T10:00:00Z"))
-        val scheduler = LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps, clock)
+        val scheduler =
+            LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps, tracking, clock)
 
         every { liveData.allLiveMatches() } returns emptyList()
         scheduler.captureLiveCharts()
@@ -348,7 +360,8 @@ class LiveChartsSchedulerTest {
     @Test
     fun shouldNotSuspendCaptureLiveChartsWhenOddsIdleBackoffIsActive() {
         val clock = MutableClock(Instant.parse("2026-06-25T10:00:00Z"))
-        val scheduler = LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps, clock)
+        val scheduler =
+            LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps, tracking, clock)
 
         every { liveData.allLiveMatches() } returns emptyList()
         scheduler.captureLiveOdds()
@@ -444,7 +457,8 @@ class LiveChartsSchedulerTest {
     @Test
     fun shouldForwardTheEstimatedElapsedFixtureToCaptureLiveIndicators() {
         val clock = MutableClock(Instant.parse("2026-06-25T10:35:00Z"))
-        val scheduler = LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps, clock)
+        val scheduler =
+            LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps, tracking, clock)
         val fixture = fixtureWithElapsed(fixtureId = 233, elapsed = null, date = "2026-06-25T10:00:00+00:00")
 
         every { liveData.allLiveMatches() } returns listOf(fixture)
@@ -458,7 +472,8 @@ class LiveChartsSchedulerTest {
     @Test
     fun shouldForwardTheEstimatedElapsedFixtureToCaptureLiveOdds() {
         val clock = MutableClock(Instant.parse("2026-06-25T10:35:00Z"))
-        val scheduler = LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps, clock)
+        val scheduler =
+            LiveChartScheduler(liveData, liveChartsService, liveChartsBetsService, chartsProps, tracking, clock)
         val fixture = fixtureWithElapsed(fixtureId = 233, elapsed = null, date = "2026-06-25T10:00:00+00:00")
 
         every { liveData.allLiveMatches() } returns listOf(fixture)
