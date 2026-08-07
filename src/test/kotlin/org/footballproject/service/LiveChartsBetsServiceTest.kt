@@ -32,7 +32,6 @@ class LiveChartsBetsServiceTest {
     private val chartsProps = ChartsProps(
         ttlSeconds = 14400,
         pollingMilli = 180000,
-        trackedLeagueIds = emptyList(),
         schedulingEnabled = true,
         oddsTrackedMarketNames = setOf("fulltime_result", "3_way_handicap", "some_other_market")
     )

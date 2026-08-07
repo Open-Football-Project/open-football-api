@@ -5,6 +5,7 @@ import org.footballproject.apidata.LiveData
 import org.footballproject.clientData.LiveFixtureResponse
 import org.footballproject.model.MatchStatus
 import org.footballproject.props.ChartsProps
+import org.footballproject.props.Tracking
 import org.footballproject.service.LiveChartsBetsService
 import org.footballproject.service.LiveChartsService
 import org.slf4j.LoggerFactory
@@ -22,6 +23,7 @@ class LiveChartScheduler(
     private val liveChartsService: LiveChartsService,
     private val liveChartsBetsService: LiveChartsBetsService,
     private val chartsProps: ChartsProps,
+    private val tracking: Tracking,
     private val clock: Clock = Clock.systemUTC()
 ) {
 
@@ -110,6 +112,6 @@ class LiveChartScheduler(
         ZonedDateTime.parse(fixtureDate, DateTimeFormatter.ISO_DATE_TIME).toInstant()
     }.getOrNull()
 
-    private fun isInAValidLeague(leagueId: Int): Boolean = chartsProps.trackedLeagueIds.contains(leagueId)
+    private fun isInAValidLeague(leagueId: Int): Boolean = tracking.trackedLeagueIds.contains(leagueId)
 
 }

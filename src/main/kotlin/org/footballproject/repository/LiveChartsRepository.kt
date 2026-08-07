@@ -5,6 +5,7 @@ import org.footballproject.model.LiveIndicatorFixture
 import org.footballproject.model.LiveIndicatorFixtures
 import org.footballproject.model.LiveIndicatorType
 import org.footballproject.props.ChartsProps
+import org.footballproject.props.Tracking
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Repository
 import java.time.Duration
@@ -13,7 +14,7 @@ import java.time.Instant
 @Repository
 class LiveChartsRepository(
     private val redisTemplate: RedisTemplate<String, Any>,
-    private val chartsProps: ChartsProps
+    private val chartsProps: ChartsProps,
 ) {
 
     fun append(

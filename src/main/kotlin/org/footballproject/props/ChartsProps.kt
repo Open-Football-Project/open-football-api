@@ -6,7 +6,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 data class ChartsProps(
     val ttlSeconds: Long,
     val pollingMilli: Long,
-    val trackedLeagueIds: List<Int>,
     val schedulingEnabled: Boolean,
     val momentumWindowSize: Int = 5,
     val controlWindowSize: Int = 5,

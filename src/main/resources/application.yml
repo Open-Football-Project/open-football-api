@@ -137,17 +137,9 @@ charts:
     - fulltime_result
     - double_chance
     - both_teams_to_score
-  trackedLeagueIds:
-    - 1    # World Cup
-    - 39   # England - Premier League
-    - 140  # Spain - La Liga
 
 today-players:
   ttlSeconds: 129600
-  trackedLeagueIds:
-    - 1    # World Cup
-    - 39   # England - Premier League
-    - 140  # Spain - La Liga
   attackerMarkets:
     - anytime_goal_scorer
     - player_assists
@@ -163,6 +155,12 @@ today-players:
     - Yes
     - No
     - No Goalscorer
+
+tracking:
+  trackedLeagueIds:
+    - 1    # World Cup
+    - 39   # England - Premier League
+    - 140  # Spain - La Liga
 
 cors:
   allowed:

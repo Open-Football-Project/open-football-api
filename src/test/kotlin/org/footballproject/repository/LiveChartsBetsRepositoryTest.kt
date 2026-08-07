@@ -22,7 +22,7 @@ class LiveChartsBetsRepositoryTest {
     private val valueOps = mockk<ValueOperations<String, Any>>()
     private val underTest = LiveChartsBetsRepository(
         redisTemplate,
-        ChartsProps(ttlSeconds = 14400, pollingMilli = 180000, trackedLeagueIds = emptyList(), schedulingEnabled = true)
+        ChartsProps(ttlSeconds = 14400, pollingMilli = 180000, schedulingEnabled = true)
     )
 
     private val key = "live-chart:1539007:bets:59"

@@ -32,6 +32,7 @@ import org.footballproject.props.TodayPlayersProps
 import org.footballproject.repository.TodayPlayersRepository
 import org.footballproject.response.FixtureTodayPlayers
 import org.assertj.core.api.Assertions.assertThat
+import org.footballproject.props.Tracking
 import org.junit.jupiter.api.Test
 import java.time.Clock
 import java.time.Instant
@@ -49,14 +50,23 @@ class TodayPlayersServiceTest {
 
     private val trackedLeagueId = 1
     private val props = TodayPlayersProps(
-        trackedLeagueIds = listOf(trackedLeagueId),
         attackerMarkets = setOf(TodayPlayersProps.normalize("Anytime Goal Scorer")),
         nonPlayerOddsValues = setOf("Yes", "No", "No Goalscorer")
     )
     private val fixedClock = Clock.fixed(Instant.parse("2026-07-09T00:00:00Z"), ZoneOffset.UTC)
 
+    private val tracking = Tracking(listOf(trackedLeagueId))
+
     private val underTest = TodayPlayersService(
-        matchesData, teamData, oddsData, playersData, manipulation, todayPlayersRepository, props, fixedClock
+        matchesData,
+        teamData,
+        oddsData,
+        playersData,
+        manipulation,
+        todayPlayersRepository,
+        props,
+        tracking = tracking,
+        fixedClock
     )
 
     private val fixture = MatchResponse(
@@ -65,22 +75,33 @@ class TodayPlayersServiceTest {
         teams = Teams(home = Team(id = 26, name = "Argentina"), away = Team(id = 32, name = "Egypt"))
     )
 
-    private val messi = SquadPlayer(id = 154, name = "L. Messi", age = 38, number = 10, position = "Attacker", photo = null)
-    private val lautaro = SquadPlayer(id = 217, name = "Lautaro Martínez", age = 28, number = 22, position = "Attacker", photo = null)
+    private val messi =
+        SquadPlayer(id = 154, name = "L. Messi", age = 38, number = 10, position = "Attacker", photo = null)
+    private val lautaro =
+        SquadPlayer(id = 217, name = "Lautaro Martínez", age = 28, number = 22, position = "Attacker", photo = null)
     private val unrecognizedPositionPlayer =
         SquadPlayer(id = 999, name = "Unknown Role", age = 20, number = 99, position = "Wing-back", photo = null)
-    private val noIdPlayer = SquadPlayer(id = null, name = "No Id Guy", age = 21, number = 77, position = "Midfielder", photo = null)
-    private val salah = SquadPlayer(id = 301, name = "M. Salah", age = 33, number = 11, position = "Attacker", photo = null)
+    private val noIdPlayer =
+        SquadPlayer(id = null, name = "No Id Guy", age = 21, number = 77, position = "Midfielder", photo = null)
+    private val salah =
+        SquadPlayer(id = 301, name = "M. Salah", age = 33, number = 11, position = "Attacker", photo = null)
 
     private val bookmakers = listOf(
         Bookmaker(
             name = "Bet365",
-            bets = listOf(Bet(name = "Anytime Goal Scorer", values = listOf(OddValue(value = "Lionel Messi", odd = "1.67"))))
+            bets = listOf(
+                Bet(
+                    name = "Anytime Goal Scorer",
+                    values = listOf(OddValue(value = "Lionel Messi", odd = "1.67"))
+                )
+            )
         )
     )
 
-    private val messiScore = PlayerScore(messi, 0.6, ScoringSignal.ODDS_IMPLIED, ScoreReason.MarketOdds(listOf("Anytime Goal Scorer")))
-    private val lautaroScore = PlayerScore(lautaro, 0.3, ScoringSignal.ODDS_IMPLIED, ScoreReason.MarketOdds(listOf("Anytime Goal Scorer")))
+    private val messiScore =
+        PlayerScore(messi, 0.6, ScoringSignal.ODDS_IMPLIED, ScoreReason.MarketOdds(listOf("Anytime Goal Scorer")))
+    private val lautaroScore =
+        PlayerScore(lautaro, 0.3, ScoringSignal.ODDS_IMPLIED, ScoreReason.MarketOdds(listOf("Anytime Goal Scorer")))
     private val salahScore = PlayerScore(salah, 0.5, ScoringSignal.SEASON_STAT, ScoreReason.SeasonForm(10, 5, 2, 7.0))
 
     private val samplePlayerInfo = PlayerInfoResponse(
@@ -115,10 +136,14 @@ class TodayPlayersServiceTest {
 
     @Test
     fun `keeps at most the 3 highest-scored players per position, ordered by score descending`() {
-        val alvarez = SquadPlayer(id = 6009, name = "J. Álvarez", age = 25, number = 9, position = "Attacker", photo = null)
-        val depaul = SquadPlayer(id = 2472, name = "R. De Paul", age = 27, number = 7, position = "Attacker", photo = null)
-        val alvarezScore = PlayerScore(alvarez, 0.5, ScoringSignal.ODDS_IMPLIED, ScoreReason.MarketOdds(listOf("Anytime Goal Scorer")))
-        val depaulScore = PlayerScore(depaul, 0.2, ScoringSignal.ODDS_IMPLIED, ScoreReason.MarketOdds(listOf("Anytime Goal Scorer")))
+        val alvarez =
+            SquadPlayer(id = 6009, name = "J. Álvarez", age = 25, number = 9, position = "Attacker", photo = null)
+        val depaul =
+            SquadPlayer(id = 2472, name = "R. De Paul", age = 27, number = 7, position = "Attacker", photo = null)
+        val alvarezScore =
+            PlayerScore(alvarez, 0.5, ScoringSignal.ODDS_IMPLIED, ScoreReason.MarketOdds(listOf("Anytime Goal Scorer")))
+        val depaulScore =
+            PlayerScore(depaul, 0.2, ScoringSignal.ODDS_IMPLIED, ScoreReason.MarketOdds(listOf("Anytime Goal Scorer")))
 
         every { teamData.currentTeamSquad(26) } returns listOf(messi, lautaro, alvarez, depaul)
         every { teamData.currentTeamSquad(32) } returns emptyList()
@@ -266,7 +291,13 @@ class TodayPlayersServiceTest {
         every { teamData.currentTeamSquad(26) } returns listOf(messi)
         every { teamData.currentTeamSquad(32) } returns emptyList()
         every { oddsData.fetchAllOdds(1576804) } returns listOf(FixtureOdds(bookmakersWithSentinels))
-        every { manipulation.scorePlayerWithOdds(messi, PlayerPosition.ATTACKER, bookmakersWithSentinels) } returns messiScore
+        every {
+            manipulation.scorePlayerWithOdds(
+                messi,
+                PlayerPosition.ATTACKER,
+                bookmakersWithSentinels
+            )
+        } returns messiScore
         every { manipulation.findPlayerWithOddsName("Random Guy", listOf(messi)) } returns null
 
         underTest.buildWatchlist(fixture)
@@ -311,7 +342,8 @@ class TodayPlayersServiceTest {
 
     @Test
     fun `captures a fixture that has already kicked off, since the underlying data doesn't change after kickoff`() {
-        val alreadyLive = fixture.copy(fixture = fixture.fixture.copy(status = MatchStatus(short = MatchStatusEnum.FIRST_HALF.code)))
+        val alreadyLive =
+            fixture.copy(fixture = fixture.fixture.copy(status = MatchStatus(short = MatchStatusEnum.FIRST_HALF.code)))
         val expected = TodayPlayersWatchlist(
             1576804, trackedLeagueId, "Unknown League", "Argentina", "Egypt",
             watchlistMap(PlayerPosition.ATTACKER to listOf(messiScore)), watchlistMap()
